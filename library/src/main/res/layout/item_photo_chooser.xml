@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kk.qisheng.library.view.SquareLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <ImageView
+        android:src="@drawable/photo_loading"
+        android:id="@+id/iv_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:padding="1dip"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/v_selected"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="top|right"
+        android:clickable="true"
+        android:padding="10dp"
+        android:src="@drawable/selector_photo_chooser" />
+
+</kk.qisheng.library.view.SquareLayout>
