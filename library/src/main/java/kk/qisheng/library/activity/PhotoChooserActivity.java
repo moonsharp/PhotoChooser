@@ -73,8 +73,8 @@ public class PhotoChooserActivity extends Activity implements OnPhotoSelecteList
         tvSelectedCount = (TextView) findViewById(R.id.tv_selected_count);
         tvFinish = (TextView) findViewById(R.id.tv_finish);
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(PhotoChooser.COLUMN, 1);
-        layoutManager.setGapStrategy(2);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(PhotoChooser.COLUMN, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);

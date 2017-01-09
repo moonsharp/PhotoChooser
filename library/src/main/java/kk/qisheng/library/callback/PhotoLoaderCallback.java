@@ -35,8 +35,6 @@ public class PhotoLoaderCallback implements LoaderManager.LoaderCallbacks<Cursor
 
         List<PhotoDir> dirResult = new ArrayList();
         PhotoDir dirAll = new PhotoDir();
-        dirAll.setName("all dir");
-        dirAll.setId("ALL");
 
         while(data.moveToNext()) {
             int imageId = data.getInt(data.getColumnIndexOrThrow("_id"));

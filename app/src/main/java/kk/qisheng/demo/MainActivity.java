@@ -44,8 +44,7 @@ public class MainActivity extends Activity {
             File imgFile = new File(photoResult.getPhotoPath());
             File thumbnailFile = new File(photoResult.getThumbnailPath());
             if (imgFile.exists() && thumbnailFile.exists()) {
-                Log.d("kkqisheng", imgFile.length() + " -- " + photoResult.getPhotoPath());
-                Log.d("kkqisheng", thumbnailFile.length() + " -- " + photoResult.getThumbnailPath());
+                Log.d("kkqisheng", "photoPath: " + photoResult.getPhotoPath() + " -- thumbnailPath: " + photoResult.getThumbnailPath());
             }
         }
     }

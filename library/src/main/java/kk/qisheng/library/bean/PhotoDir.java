@@ -37,7 +37,7 @@ public class PhotoDir {
             if(TextUtils.isEmpty(this.name)) {
                 return result;
             } else {
-                result = 31 * result + this.name.hashCode();
+                result = 99 * result + this.name.hashCode();
                 return result;
             }
         }
