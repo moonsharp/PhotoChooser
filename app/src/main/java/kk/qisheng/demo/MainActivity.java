@@ -31,22 +31,22 @@ public class MainActivity extends Activity {
     private void openChooser() {
         PhotoChooser.getInstance().getPhotos(this, new OnGetPhotoCallback() {
             @Override
-            public void onGetPhotos(List<PhotoResult> photoResults) {
-                showResults(photoResults);
+            public void onGetPhotos(List<PhotoResult> list) {
+
+                if(list.size()==0){
+                    Log.d("PhotoChooser", "用户没有选择任何图片");
+                }
+
+                for (PhotoResult photoResult : list) {
+                    File imgFile = new File(photoResult.getPhotoPath());
+                    File thumbnailFile = new File(photoResult.getThumbnailPath());
+                    if (imgFile.exists() && thumbnailFile.exists()) {
+                        Log.d("PhotoChooser", "原图路径: " + photoResult.getPhotoPath() + "缩略图路径: " + photoResult.getThumbnailPath());
+                    }
+                }
             }
+
         });
-    }
-
-
-    private void showResults(List<PhotoResult> photoResults) {
-        Log.d("kkqisheng", "selected count: " + photoResults.size());
-        for (PhotoResult photoResult : photoResults) {
-            File imgFile = new File(photoResult.getPhotoPath());
-            File thumbnailFile = new File(photoResult.getThumbnailPath());
-            if (imgFile.exists() && thumbnailFile.exists()) {
-                Log.d("kkqisheng", "photoPath: " + photoResult.getPhotoPath() + " -- thumbnailPath: " + photoResult.getThumbnailPath());
-            }
-        }
     }
 
 }
