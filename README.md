@@ -21,6 +21,7 @@ compile 'com.github.moonsharp:PhotoChooser:0.9.2' //添加依赖
 ```
 ##ChoosePhoto
 Just call one method,you can get the photos of user selected,like this sample:
+
 只需调用一个方法即可跳转到图片选择库并拿到回调，回调的结果为用户所选图片的集合。如果通过拍照获取图片，则该集合只有一个元素。
 PhotoResult为封装后的图片对象，从中可以拿到原图和缩略图的路径，其中缩略图经过压缩后尺寸都要小很多，可直接转换成bitmap后用于显示。
 ```
