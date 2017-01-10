@@ -5,7 +5,7 @@ Imitation of WeChat PhotoChooser,it's pretty smoothly while load photos and so e
 
 #Preview
 ![image](https://github.com/moonsharp/PhotoChooser/blob/master/img/read_me_01.jpg)
-![image](https://github.com/moonsharp/PhotoChooser/blob/master/img/read_me_02.jpg)
+![image](https://github.com/moonsharp/PhotoChooser/blob/master/img/read_me_03.jpg)
 
 #Usage
 
