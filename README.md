@@ -1,7 +1,7 @@
 # PhotoChooser
-Imitation of WeChat PhotoChooser,it's simple configuration and useage.It will callback the photos include source of photo and thumbnail after user choose photos. 
+Imitation of WeChat PhotoChooser,it's pretty smoothly while load photos and so easy for usage.After user choose photos,it will callback source and thumbnail of the photos.
 
-仿微信图片选择库，加载流畅，配置简单，调用简单，带拍照压缩功能，用户选择完图片或拍照完成后，会自动回调所选的图片，包括原图和压缩后的缩略图。
+仿微信图片选择库，加载流畅，使用简单，带拍照压缩功能，用户选择完图片或拍照完成后，会自动回调所选的图片，包括原图和压缩后的缩略图。
 
 #Preview
 ![image](https://github.com/moonsharp/PhotoChooser/blob/master/img/read_me_01.jpg)
@@ -22,7 +22,7 @@ allprojects {
 
 and then apply it in your module:
 ```
-compile 'com.github.moonsharp:PhotoChooser:1.0.0' //添加依赖
+compile 'com.github.moonsharp:PhotoChooser:1.0.1' //添加依赖
 ```
 ##ChoosePhoto
 Just call one method,you can get the photos of user selected,like this sample:
