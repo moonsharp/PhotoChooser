@@ -32,7 +32,7 @@ PhotoResult为封装后的图片对象，从中可以拿到原图和缩略图的
 ```
     PhotoChooser.getInstance().getPhotos(this, new OnGetPhotoCallback() {
         @Override
-        public void onGetPhotos(List<PhotoResult> list) {
+        public void onGetPhotos(ArrayList<PhotoResult> list) {
 
             if(list.size()==0){
                 Log.d("PhotoChooser", "用户没有选择任何图片");
