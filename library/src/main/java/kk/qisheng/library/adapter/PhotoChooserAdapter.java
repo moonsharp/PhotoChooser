@@ -17,11 +17,9 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import kk.qisheng.library.PhotoChooser;
 import kk.qisheng.library.R;
-import kk.qisheng.library.bean.PhotoDir;
 import kk.qisheng.library.bean.PhotoResult;
 import kk.qisheng.library.callback.OnCameraClickListener;
 import kk.qisheng.library.callback.OnPhotoClickListener;
@@ -35,16 +33,15 @@ public class PhotoChooserAdapter extends RecyclerView.Adapter<PhotoChooserAdapte
 
     private Context mContext;
     private LayoutInflater inflater;
-    private List<PhotoDir> photoDirs = new ArrayList();
-    public List<PhotoResult> selectedPhotos = new ArrayList<>();
+    public ArrayList<PhotoResult> mDatas;
     private int photoSize;
     private OnPhotoClickListener mPhotoListener;
     private OnCameraClickListener mCameraListener;
     private OnPhotoSelecteListener mSelecteListener;
 
-    public PhotoChooserAdapter(Context context, List<PhotoDir> photoDirectories) {
+    public PhotoChooserAdapter(Context context, ArrayList<PhotoResult> list) {
         this.mContext = context;
-        this.photoDirs = photoDirectories;
+        this.mDatas = list;
         this.inflater = LayoutInflater.from(context);
         setPhotoSize(context);
     }
@@ -52,8 +49,8 @@ public class PhotoChooserAdapter extends RecyclerView.Adapter<PhotoChooserAdapte
     @Override
     public int getItemCount() {
         int count = 0;
-        if (photoDirs != null && photoDirs.size() > 0 && photoDirs.get(0).getPhotos() != null) {
-            count = photoDirs.get(0).getPhotos().size();
+        if (mDatas != null) {
+            count = mDatas.size();
         }
         return count + 1;
     }
@@ -69,7 +66,7 @@ public class PhotoChooserAdapter extends RecyclerView.Adapter<PhotoChooserAdapte
     public void onBindViewHolder(final PhotoChooserAdapter.PhotoViewHolder holder, final int position) {
         PhotoResult photo = new PhotoResult();
         if (position > 0) {
-            photo = photoDirs.get(0).getPhotos().get(position - 1);
+            photo = mDatas.get(position - 1);
         }
 
         final PhotoResult photoResult = photo;
@@ -84,33 +81,28 @@ public class PhotoChooserAdapter extends RecyclerView.Adapter<PhotoChooserAdapte
             }
         });
 
-        holder.vSelected.setOnClickListener(new View.OnClickListener() {
+        holder.ivSelect.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if (photoResult.isSelected()) {
-                    selectedPhotos.remove(photoResult);
-                } else {
-                    selectedPhotos.add(photoResult);
-                }
                 photoResult.setSelected(!photoResult.isSelected());
                 int pos = holder.getAdapterPosition();
                 notifyItemChanged(pos);
                 if (mSelecteListener != null)
-                    mSelecteListener.onPhotoSelected(photoResult, selectedPhotos);
+                    mSelecteListener.onPhotoSelected(photoResult, getSelectedPhotos());
             }
         });
 
         //相机
         if (position == 0) {
             holder.ivPhoto.setImageResource(R.drawable.photo_camera);
-            holder.vSelected.setVisibility(View.GONE);
+            holder.ivSelect.setVisibility(View.GONE);
             return;
         }
 
-        holder.vSelected.setVisibility(View.VISIBLE);
+        holder.ivSelect.setVisibility(View.VISIBLE);
 
         loadPhoto(photoResult, holder.ivPhoto);
 
-        holder.vSelected.setSelected(photoResult.isSelected());
+        holder.ivSelect.setSelected(photoResult.isSelected());
 
         if (photoResult.isSelected()) {
             holder.ivPhoto.setColorFilter(Color.parseColor("#77000000"));
@@ -141,14 +133,25 @@ public class PhotoChooserAdapter extends RecyclerView.Adapter<PhotoChooserAdapte
         this.photoSize = widthPixels / PhotoChooser.COLUMN;
     }
 
+    public ArrayList<PhotoResult> getSelectedPhotos() {
+        ArrayList<PhotoResult> newList = new ArrayList<>();
+        for(PhotoResult photoResult:mDatas){
+            if(photoResult.isSelected()){
+                newList.add(photoResult);
+            }
+        }
+
+        return newList;
+    }
+
     public class PhotoViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivPhoto;
-        private View vSelected;
+        private View ivSelect;
 
         public PhotoViewHolder(View itemView) {
             super(itemView);
             this.ivPhoto = (ImageView) itemView.findViewById(R.id.iv_photo);
-            this.vSelected = itemView.findViewById(R.id.v_selected);
+            this.ivSelect = itemView.findViewById(R.id.iv_select);
         }
     }
 

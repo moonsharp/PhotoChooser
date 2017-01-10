@@ -16,7 +16,6 @@ import android.widget.TextView;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +36,9 @@ public class PhotoChooserActivity extends Activity implements OnPhotoSelecteList
     private RecyclerView recyclerView;
     private TextView tvSelectedCount, tvFinish;
 
-    PhotoChooserAdapter mAdapter;
-    private List<PhotoDir> mPhotoDirs = new ArrayList<>();
+    private PhotoChooserAdapter mAdapter;
+    private ArrayList<PhotoResult> mAllDatas = new ArrayList<>();
     private File mCameraFile;
-    private PhotoResult mPhotoResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +51,25 @@ public class PhotoChooserActivity extends Activity implements OnPhotoSelecteList
     }
 
     private void initData() {
-        mAdapter = new PhotoChooserAdapter(this, mPhotoDirs);
+        mAdapter = new PhotoChooserAdapter(this, mAllDatas);
         mAdapter.setPhotoListener(this);
         mAdapter.setCameraListener(this);
         mAdapter.setSelecteListener(this);
         PhotoUtil.getPhotoDirs(this, new Bundle(), new PhotoSearchCallback() {
             @Override
             public void onSearchCallback(List<PhotoDir> photoDirs) {
-                mPhotoDirs.clear();
-                mPhotoDirs.addAll(photoDirs);
+                mAllDatas.clear();
+                mAllDatas.addAll(listPhotos(photoDirs));
                 mAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    private List<PhotoResult> listPhotos(List<PhotoDir> photoDirs) {
+        if (photoDirs != null && photoDirs.size() > 0 && photoDirs.get(0) != null) {
+            return photoDirs.get(0).getPhotos();
+        }
+        return new ArrayList<>();
     }
 
 
@@ -89,14 +94,14 @@ public class PhotoChooserActivity extends Activity implements OnPhotoSelecteList
         findViewById(R.id.tv_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleFinish(mAdapter.selectedPhotos);
+                handleFinish(mAdapter.getSelectedPhotos());
             }
         });
     }
 
-    private void handleFinish(List<PhotoResult> photos) {
+    private void handleFinish(ArrayList<PhotoResult> photos) {
         Intent intent = new Intent();
-        intent.putExtra("photo_selected_result", (Serializable) photos);
+        intent.putParcelableArrayListExtra("photo_selected_result", photos);
         setResult(Activity.RESULT_OK, intent);
         EventBus.getDefault().post(intent);
         finish();
@@ -111,9 +116,9 @@ public class PhotoChooserActivity extends Activity implements OnPhotoSelecteList
 
     @Override
     public void onPhotoClick(PhotoResult photoResult) {
-        mPhotoResult = photoResult;
-        Intent intent = new Intent(this, kk.qisheng.library.activity.PhotoPreviewActivity.class);
-        intent.putExtra("photo_path", photoResult.getPhotoPath());
+        Intent intent = new Intent(this, PhotoPreviewActivity.class);
+        intent.putParcelableArrayListExtra("photo_preview", mAdapter.mDatas);
+        intent.putExtra("photo_index", mAdapter.mDatas.indexOf(photoResult));
         startActivityForResult(intent, 0x101);
     }
 
@@ -129,15 +134,17 @@ public class PhotoChooserActivity extends Activity implements OnPhotoSelecteList
         switch (requestCode) {
             case 0x101:
                 if (resultCode == Activity.RESULT_OK) {
-                    mPhotoResult.setSelected(true);
-                    mAdapter.selectedPhotos.add(mPhotoResult);
-                    mAdapter.notifyDataSetChanged();
-                    setSelectedCount(mAdapter.selectedPhotos.size());
+                    ArrayList<PhotoResult> photoResults = data.getParcelableArrayListExtra("photo_preview_back");
+                    if (photoResults != null) {
+                        mAdapter.mDatas = photoResults;
+                        mAdapter.notifyDataSetChanged();
+                        setSelectedCount(mAdapter.getSelectedPhotos().size());
+                    }
                 }
                 break;
 
             case 0x102:
-                List<PhotoResult> list = new ArrayList<>();
+                ArrayList<PhotoResult> list = new ArrayList<>();
                 //如果取消拍照返回，直接回调空list
                 if (resultCode == 0) {
                     handleFinish(list);
@@ -150,7 +157,7 @@ public class PhotoChooserActivity extends Activity implements OnPhotoSelecteList
         }
     }
 
-    private void compressCameraPhoto(final List<PhotoResult> list) {
+    private void compressCameraPhoto(final ArrayList<PhotoResult> list) {
         final PhotoResult photoResult = new PhotoResult(22, mCameraFile.getAbsolutePath());
         list.add(photoResult);
 

@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#393A3E"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp">
+        android:paddingBottom="1.5dp"
+        android:paddingTop="1.5dp">
 
         <ImageView
             android:id="@+id/iv_back"

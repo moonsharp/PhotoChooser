@@ -1,6 +1,6 @@
 package kk.qisheng.library.callback;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import kk.qisheng.library.bean.PhotoResult;
 
@@ -9,6 +9,6 @@ import kk.qisheng.library.bean.PhotoResult;
  */
 public interface OnGetPhotoCallback {
 
-    void onGetPhotos(List<PhotoResult> photoResults);
+    void onGetPhotos(ArrayList<PhotoResult> photoResults);
 
 }

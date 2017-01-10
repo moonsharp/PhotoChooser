@@ -7,7 +7,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import kk.qisheng.library.activity.PhotoChooserActivity;
 import kk.qisheng.library.bean.PhotoResult;
@@ -52,7 +52,7 @@ public class PhotoChooser {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getPhotoBack(Intent data) {
-        List<PhotoResult> list = (List<PhotoResult>) data.getSerializableExtra("photo_selected_result");
+        ArrayList<PhotoResult> list = data.getParcelableArrayListExtra("photo_selected_result");
         if (mCallback != null) mCallback.onGetPhotos(list);
     }
 

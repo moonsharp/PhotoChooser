@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#393A3E"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp">
+        android:paddingBottom="1.5dp"
+        android:paddingTop="5dp">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -20,28 +20,32 @@
             android:src="@drawable/back" />
 
 
-        <TextView
-            android:id="@+id/tv_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/iv_select"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/selector_shape_angle_green"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:text="选择"
-            android:textColor="@android:color/white"
-            android:textSize="15sp" />
+            android:clickable="true"
+            android:padding="5dp"
+            android:src="@drawable/selector_photo_chooser" />
 
+        <TextView
+            android:id="@+id/tv_selected_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/iv_select"
+            android:text="已选0张"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
     </RelativeLayout>
 
-    <kk.qisheng.library.view.ZoomImageView
-        android:id="@+id/iv_preview"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter" />
+        android:layout_height="match_parent" />
+
 </LinearLayout>
