@@ -31,6 +31,7 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
 
     private static final String TAG = "ZoomImageView";
     private boolean isInit;
+    private float mTemp = 1.0f;
 
 
     /**
@@ -189,7 +190,7 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
 
     @Override
     public void onGlobalLayout() {
-        if(arae_img_id != -1){
+        if (arae_img_id != -1) {
             arae_img_id = -1;
             return;
         }
@@ -438,29 +439,29 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
 
     @Override
     public boolean onScale(ScaleGestureDetector detector) {
-
         float scaleFactor = detector.getScaleFactor();//获取用户手势判断出来的缩放值
-        float scale = getScale();
-
-        /**
-         * 没有图片
-         */
         if (getDrawable() == null) return true;
 
+//        if ((scale <= mMaxScale && scaleFactor > 1.0f) || (scale > mMinScale && scaleFactor < 1.0f)) {
+//        if (scaleFactor * scale < mMinScale) {
+//            scaleFactor = mMinScale / scale;
+//        }
+//
+//        if (scale * scaleFactor > mMaxScale) {
+//            scaleFactor = mMaxScale / scale;
+//        }
+
         //缩放范围控制
-        if ((scale < mMaxScale && scaleFactor > 1.0f) || (scale > mMinScale && scaleFactor < 1.0f)) {
-            if (scaleFactor * scale < mMinScale) {
-                scaleFactor = mMinScale / scale;
-            }
+        float dex = scaleFactor - 1;
+        mTemp = mTemp + dex;
 
-            if (scale * scaleFactor > mMaxScale) {
-                scaleFactor = mMaxScale / scale;
-            }
-
-            mMatrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
-            checkBorderAndCenterWhenScale();
-            setImageMatrix(mMatrix);
+        if (mTemp > 1.4 || mTemp < 0.35) {
+            return true;
         }
+
+        mMatrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
+        checkBorderAndCenterWhenScale();
+        setImageMatrix(mMatrix);
         return true;
     }
 
@@ -563,15 +564,5 @@ public class ZoomImageView extends ImageView implements ViewTreeObserver.OnGloba
         this.onClickListener = l;
     }
 
-    /**
-     * 设置加载中的占位图
-     *
-     * @param resID
-     */
-    public void placeholder(int resID) {
-        this.arae_img_id = resID;
-        setScaleType(ScaleType.CENTER);
-        setImageResource(resID);
-    }
 
 }

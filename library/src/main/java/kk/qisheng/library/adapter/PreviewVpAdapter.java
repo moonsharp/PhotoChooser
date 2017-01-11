@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
@@ -57,7 +56,7 @@ public class PreviewVpAdapter extends PagerAdapter {
             return;
         }
 
-        Glide.with(mContext).load(photoResult.getPhotoPath()).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(iv);
+        Glide.with(mContext).load(photoResult.getPhotoPath()).override(320, 480).placeholder(R.drawable.photo_loading).into(iv);
     }
 
 }
