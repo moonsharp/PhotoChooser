@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
             public void onGetPhotos(ArrayList<PhotoResult> list) {
 
                 if(list.size()==0){
-                    Log.d("PhotoChooser", "用户没有选择任何图片");
+                    Log.d("PhotoChooser", "没有选择任何图片");
                 }
 
                 for (PhotoResult photoResult : list) {
