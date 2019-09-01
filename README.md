@@ -3,13 +3,13 @@ A PhotoChooser like WeChat,it's pretty smoothly while load photos and so easy fo
 
 仿微信图片选择库，加载流畅，使用简单，带拍照压缩功能，用户选择完图片或拍照完成后，会自动回调所选的图片，包括原图和压缩后的缩略图。
 
-#Preview
+# Preview
 ![image](https://github.com/moonsharp/PhotoChooser/blob/master/img/read_me_01.jpg)
 ![image](https://github.com/moonsharp/PhotoChooser/blob/master/img/read_me_03.jpg)
 
-#Usage
+# Usage
 
-##Gradle
+## Gradle
 root gradle
 ```
 allprojects {
@@ -24,7 +24,7 @@ and then apply it in your module:
 ```
 compile 'com.github.moonsharp:PhotoChooser:1.0.2' //添加依赖
 ```
-##ChoosePhoto
+## ChoosePhoto
 Just call one method,you can get the photos of user selected,like this sample:
 
 只需调用一个方法即可跳转到图片选择库并拿到回调，回调的结果为用户所选图片的集合。如果通过拍照获取图片，则该集合只有一个元素。
